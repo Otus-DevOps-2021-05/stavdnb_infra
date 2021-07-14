@@ -10,7 +10,7 @@ ssh-keygen -t rsa -f ~/.ssh/appuser -C appuser -P ""  (-C login -Р passphrase)
 ### По условию ДЗ были созданы 2 ВМ  :
 
 bastion_IP = 178.154.202.80
-someinternal_IP = 10.128.0.10
+someinternalhost_IP = 10.128.0.10
 
 Проверяем подключение
 
