@@ -9,8 +9,8 @@ ssh-keygen -t rsa -f ~/.ssh/appuser -C appuser -P ""  (-C login -Р passphrase)
 
 ### По условию ДЗ были созданы 2 ВМ  :
 
-  bastion_ip = 178.154.202.80
-  someinternal_ip = 10.128.0.10
+  bastion_IP = 178.154.202.80
+  someinternal_IP = 10.128.0.10
 
 Проверяем подключение
 
@@ -20,7 +20,7 @@ ssh -i ~/.ssh/appuser appuser@178.154.202.80
 
      - создать файл  ~/.ssh/config
 
-'''
+```
     Host bastion
     Hostname 178.154.202.80
     User appuser
@@ -30,16 +30,16 @@ Host someinternalhost
     User appuser
     IdentityFile ~/.ssh/appuser
     ProxyCommand ssh -q bastion nc -q0 10.128.0.10 22
-'''
+```
 После чего подключаться можно по имени ssh someinternalhost
 
 Если процедура не частая подключаться можно также и через IP адрес предварительно указав forwarding (-А) и подкидывая на хост свой приватный ключ (.ррк)
-'''
+```
 ssh-add ~/.ssh/appuser
-'''
-'''
+```
+```
 ssh -A -t appuser@178.154.202.80 ssh 10.128.0.10
-'''
+```
 
 
 ### Устанавливаем и настраиваем vpn server Pritunl
@@ -50,7 +50,7 @@ ssh bastion
 
 Выполняем следующие команды
 
-'''
+```
 sudo tee /etc/apt/sources.list.d/pritunl.list << EOF
 deb http://repo.pritunl.com/stable/apt focal main
 EOF
@@ -74,16 +74,15 @@ systemctl enable mongod pritunl
 
 sudo systemctl start mongod pritunl
 
-'''
+```
 ### С помощью сервиса https://sslip.io/ регистрируем сертификат Let's Encrypt
 
-'''
+```
 sudo service pritunl stop
 sudo wget https://bootstrap.pypa.io/get-pip.py
 sudo python3 -m pip install certbot
-sudo certbot certonly --standalone -d 178.154.227.222.sslip.io
+sudo certbot certonly --standalone -d 178.154.202.80.sslip.io
 sudo service pritunl start
 sudo pritunl set app.server_cert "$(sudo cat /etc/letsencrypt/live/178.154.202.80.sslip.io/fullchain.pem)"
 sudo pritunl set app.server_key "$(sudo cat /etc/letsencrypt/live/178.154.202.80.sslip.io/privkey.pem)"
-
-'''
+```
