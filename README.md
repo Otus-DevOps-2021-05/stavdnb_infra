@@ -156,3 +156,4 @@ sudo service pritunl start
 sudo pritunl set app.server_cert "$(sudo cat /etc/letsencrypt/live/178.154.202.80.sslip.io/fullchain.pem)"
 sudo pritunl set app.server_key "$(sudo cat /etc/letsencrypt/live/178.154.202.80.sslip.io/privkey.pem)"
 ```
+transfer
